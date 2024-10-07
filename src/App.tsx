@@ -1,26 +1,30 @@
-import { FC } from 'react';
+import { FC, Suspense, lazy } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import TaskList from './components/TaskList';
-import AddTaskForm from './components/AddTaskForm';
-import ThemeToggleButton from './components/ThemeToggleButton';
+import AppRoutes from './routes';
 
-import { ThemeProvider } from './context/ThemeContext';
+import { LOADING, TASK_MANAGER } from './constants';
 import { TaskProvider } from './context/TaskContext';
-import { TASK_MANAGER } from './constants';
+import { ThemeProvider } from './context/ThemeContext';
+
+const ThemeToggleButton = lazy(() => import('./components/common/ThemeToggleButton'));
 
 const App: FC = () => {
   return (
-    <ThemeProvider>
-      <TaskProvider>
-        <div className="app-container">
-          <ThemeToggleButton />
+    <Router>
+      <ThemeProvider>
+        <TaskProvider>
+          <div className="app-container">
+            <Suspense fallback={<div>{LOADING}</div>}>
+              <ThemeToggleButton />
+              <h1>{TASK_MANAGER}</h1>
 
-          <h1>{TASK_MANAGER}</h1>
-          <AddTaskForm />
-          <TaskList />
-        </div>
-      </TaskProvider>
-    </ThemeProvider>
+              <AppRoutes />
+            </Suspense>
+          </div>
+        </TaskProvider>
+      </ThemeProvider>
+    </Router>
   );
 };
 
