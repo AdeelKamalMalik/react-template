@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { IconButton, useTheme } from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 
-import { useThemeContext } from '../context/ThemeContext';
+import { useThemeContext } from '../../context/ThemeContext';
 
 const ThemeToggleButton: FC = () => {
   const { toggleTheme } = useThemeContext();

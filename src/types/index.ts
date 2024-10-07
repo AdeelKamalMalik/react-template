@@ -1,16 +1,16 @@
-import { Dispatch, SetStateAction } from "react";
+export type TaskStatus = 'pending' | 'in-progress' | 'done';
 
 export type Task = {
   id: number;
   title: string;
+  status: TaskStatus;
 }
 
 export type TaskContextProps = {
   tasks: Task[];
-  newTask: string;
-  addTask: (title: string) => void;
+  addTask: (title: string, status: TaskStatus) => void;
+  updateTask: (task: Task) => void;
   removeTask: (id: number) => void;
-  setNewTask: Dispatch<SetStateAction<string>>;
 }
 
 export type ThemeContextProps = {
@@ -20,4 +20,19 @@ export type ThemeContextProps = {
 
 export type WithAuthProps = {
   isAuthenticated: boolean;
+}
+
+export type Option = {
+  label: string;
+  value: string
+}
+
+export type TaskFormProps = {
+  defaultValues: TaskFormValues;
+  onSubmit: (data: TaskFormValues) => void;
+}
+
+export type TaskFormValues = {
+  title: string;
+  status: string;
 }
