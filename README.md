@@ -97,7 +97,7 @@ Lazy loading is implemented to improve performance by loading components only wh
 To get started with the project, clone the repository and install the dependencies:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/AdeelKamalMalik/react-template.git
 cd react-template
 npm install
 ```
