@@ -12,8 +12,14 @@ import { useThemeContext } from './context/ThemeContext';
 
 const AppContainer = styled.div<{ gradient: string }>`
   min-height: 100vh;
+  height: 100%;
+  width: 100%;
   background: ${({ gradient }) => gradient};
   padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 `;
 
 const App: FC = () => {

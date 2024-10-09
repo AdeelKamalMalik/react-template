@@ -1,13 +1,10 @@
 import React from 'react'
-import { Draggable } from '@hello-pangea/dnd'
 import styled from 'styled-components'
-import { BoardItemStylesProps, Item } from '../../types'
-import { TAG_COLORS } from '../../constants'
+import { Draggable } from '@hello-pangea/dnd'
 
-type BoardItemProps = {
-  index: number
-  item: Item
-}
+import { TAG_COLORS } from '../../constants'
+import { BoardItemProps, BoardItemStylesProps } from '../../types'
+
 
 const BoardItemEl = styled.div<BoardItemStylesProps>`
   padding: 16px;
@@ -68,7 +65,7 @@ const BoardItem: React.FC<BoardItemProps> = ({ index, item }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           isdragging={snapshot.isDragging ? 'true' : 'false'}
-          priority={item.priority} // Ensure item.priority is defined
+          priority={item.priority}
         >
           <BoardItemTitle>{item.title}</BoardItemTitle>
           <BoardItemDescription>{item.description}</BoardItemDescription>

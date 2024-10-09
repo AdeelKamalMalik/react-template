@@ -1,9 +1,11 @@
 import React from 'react';
 import { Droppable } from '@hello-pangea/dnd';
 import styled from 'styled-components';
+
 import BoardItem from './item';
-import { BoardColumnContentStylesProps, BoardColumnProps } from '../../types';
+
 import { useThemeContext } from '../../context/ThemeContext';
+import { BoardColumnContentStylesProps, BoardColumnProps } from '../../types';
 
 const BoardColumnWrapper = styled.div`
   flex: 1;
@@ -16,7 +18,6 @@ const BoardColumnWrapper = styled.div`
     margin-left: 12px;
   }
 `;
-
 
 const BoardColumnTitle = styled.h2<{ isDarkMode: boolean }>`
   font: 14px sans-serif;

@@ -7,11 +7,13 @@ export type Task = {
 }
 
 export type TaskContextProps = {
-  tasks: Task[];
-  addTask: (title: string, status: TaskStatus) => void;
-  updateTask: (task: Task) => void;
-  removeTask: (id: number) => void;
-}
+  tasks: Item[];
+  addTask: (title: string, description: string, tags: Tag[]) => void;
+  updateTask: (task: Item) => void;
+  removeTask: (id: string) => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+};
 
 export type ThemeContextProps = {
   toggleTheme: () => void;

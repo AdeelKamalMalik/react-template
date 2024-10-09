@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useCallback, useMemo, FC, ReactNode } from 'react';
+
 import { generateTaskId } from '../utils';
-import { Task, TaskContextProps, TaskStatus } from '../types';
+import { Item, Tag, TaskContextProps } from '../types';
 import { TASK_CONTEXT_ERROR } from '../constants';
 
 const TaskContext = createContext<TaskContextProps | undefined>(undefined);
@@ -12,41 +13,55 @@ export const useTaskContext = () => {
 };
 
 export const TaskProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Item[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const filteredTasks = useMemo(() => {
+    return tasks.filter(task =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [tasks, searchTerm]);
 
   const addTask = useCallback(
-    (title: string, status: TaskStatus = 'pending') => {
-      const newTask: Task = {
-        id: generateTaskId(),
+    (title: string, description: string, tags: Tag[]) => {
+      const dueDate = new Date();
+      dueDate.setDate(dueDate.getDate() + 2);
+  
+      const newTask: Item = {
+        id: generateTaskId().toString(),
         title,
-        status,
+        description,
+        tags,
+        dueDate: dueDate.toISOString().split('T')[0]
       };
+  
       setTasks((prevTasks) => [...prevTasks, newTask]);
     },
-    [setTasks]
+    []
   );
+  
 
   const removeTask = useCallback(
-    (id: number) => {
+    (id: string) => {
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
     },
-    [setTasks]
+    []
   );
 
   const updateTask = useCallback(
-    (updatedTask: Task) => {
+    (updatedTask: Item) => {
       setTasks((prevTasks) =>
         prevTasks.map((task) =>
           task.id === updatedTask.id ? updatedTask : task
         )
       );
     },
-    [setTasks]
+    []
   );
 
   const value = useMemo(
-    () => ({ tasks, addTask, removeTask, updateTask }),
-    [tasks, addTask, removeTask, updateTask]
+    () => ({ tasks: filteredTasks, addTask, removeTask, searchTerm, updateTask, setSearchTerm }),
+    [filteredTasks, addTask, removeTask, searchTerm, updateTask]
   );
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;

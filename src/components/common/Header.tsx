@@ -2,13 +2,13 @@ import { FC, useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, Button, TextField, IconButton, Avatar } from '@mui/material';
 
 import ThemeToggleButton from './ThemeToggleButton';
-
+import { useTaskContext } from '../../context/TaskContext';
 import { useThemeContext } from '../../context/ThemeContext';
 import { ADD_CARD, SEARCH, SEARCH_TEXT, TASK_BOARD, USER_AVATAR } from '../../constants';
 
 const Header: FC = () => {
   const { isDarkMode } = useThemeContext();
-  const [searchTerm, setSearchTerm] = useState('');
+  const { setSearchTerm } = useTaskContext();
   const [randomAvatar, setRandomAvatar] = useState<string>('');
 
   useEffect(() => {
@@ -17,12 +17,11 @@ const Header: FC = () => {
   }, []);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    setSearchTerm(event.target.value); // Set search term directly
   };
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Searching for:', searchTerm);
   };
 
   return (
@@ -36,7 +35,6 @@ const Header: FC = () => {
           <TextField
             variant="outlined"
             placeholder={SEARCH_TEXT}
-            value={searchTerm}
             onChange={handleSearchChange}
             size="small"
             sx={{ backgroundColor: isDarkMode ? '#444' : '#fff', color: isDarkMode ? '#fff' : '#000' }}
