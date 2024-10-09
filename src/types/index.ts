@@ -16,6 +16,10 @@ export type TaskContextProps = {
 export type ThemeContextProps = {
   toggleTheme: () => void;
   isDarkMode: boolean;
+  currentGradients: {
+    background: string;
+  };
+
 }
 
 export type WithAuthProps = {
@@ -43,7 +47,7 @@ export type Item = {
   id: string
   title: string
   description: string
-  tags?: string[]
+  tags?: Tag[]
   dueDate?: string
   priority?: Priority
 }
@@ -78,3 +82,20 @@ export type BoardColumnProps = {
 export type BoardColumnContentStylesProps = {
   isdraggingover: string
 }
+
+export type Tag =
+  | 'bug'
+  | 'urgent'
+  | 'design'
+  | 'feature'
+  | 'devops'
+  | 'automation'
+  | 'testing'
+  | 'UI'
+  | 'marketing'
+  | 'research'
+  | 'payment';
+
+export type TagColors = {
+  [key in Tag]: string;
+};

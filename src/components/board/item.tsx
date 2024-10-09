@@ -1,8 +1,8 @@
-
 import React from 'react'
 import { Draggable } from '@hello-pangea/dnd'
 import styled from 'styled-components'
 import { BoardItemStylesProps, Item } from '../../types'
+import { TAG_COLORS } from '../../constants'
 
 type BoardItemProps = {
   index: number
@@ -11,17 +11,22 @@ type BoardItemProps = {
 
 const BoardItemEl = styled.div<BoardItemStylesProps>`
   padding: 16px;
-  background-color: ${({ isdragging }) => isdragging === 'true' ? '#d3e4ee' : '#fff'};
-  border-radius: 4px;
-  border-left: 4px solid ${({ priority }) => priority === 'high' ? '#e53935' : priority === 'medium' ? '#ffb300' : '#4caf50'};
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  border-radius: 8px;
+  border-left: 4px solid ${({ priority }) => 
+    priority === 'high' ? '#e53935' :
+    priority === 'medium' ? '#ffb300' :
+    priority === 'low' ? '#4caf50' : 'transparent'};
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  transition: background-color .25s ease-out;
+  transition: background-color .25s ease-out, box-shadow .25s ease-out;
   margin-bottom: 8px;
 
   &:hover {
-    background-color: #f7fafc;
+    background: linear-gradient(135deg, #f7fafc 0%, #e0e0e0 100%);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   }
-`
+`;
+
 
 const BoardItemTitle = styled.h4`
   font-size: 16px;
@@ -41,12 +46,12 @@ const TagsContainer = styled.div`
   margin-bottom: 12px;
 `
 
-const Tag = styled.span`
+const Tag = styled.span<{ color: string }>`
   padding: 4px 8px;
-  background-color: #e0f7fa;
+  background-color: ${({ color }) => color};
   border-radius: 12px;
   font-size: 12px;
-  color: #00695c;
+  color: #fff;
 `
 
 const DueDate = styled.div`
@@ -63,7 +68,7 @@ const BoardItem: React.FC<BoardItemProps> = ({ index, item }) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           isdragging={snapshot.isDragging ? 'true' : 'false'}
-          priority={item.priority}
+          priority={item.priority} // Ensure item.priority is defined
         >
           <BoardItemTitle>{item.title}</BoardItemTitle>
           <BoardItemDescription>{item.description}</BoardItemDescription>
@@ -71,7 +76,7 @@ const BoardItem: React.FC<BoardItemProps> = ({ index, item }) => {
           {item.tags && (
             <TagsContainer>
               {item.tags.map((tag, i) => (
-                <Tag key={i}>{tag}</Tag>
+                <Tag key={i} color={TAG_COLORS[tag] || "#ccc"}>{tag}</Tag>
               ))}
             </TagsContainer>
           )}
@@ -82,7 +87,8 @@ const BoardItem: React.FC<BoardItemProps> = ({ index, item }) => {
         </BoardItemEl>
       )}
     </Draggable>
-  )
-}
+  );
+};
+
 
 export default BoardItem

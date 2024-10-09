@@ -19,6 +19,12 @@ export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setIsDarkMode((prev) => !prev);
   };
 
+  const currentGradients = {
+    background: isDarkMode
+      ? 'linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 100%)'
+      : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+  };
+
   const theme = createTheme({
     palette: {
       mode: isDarkMode ? Theme.DARK : Theme.LIGHT,
@@ -26,7 +32,7 @@ export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
   });
 
   return (
-    <ThemeContext.Provider value={{ toggleTheme, isDarkMode }}>
+    <ThemeContext.Provider value={{ toggleTheme, isDarkMode, currentGradients }}>
       <MUIThemeProvider theme={theme}>
         {children}
       </MUIThemeProvider>

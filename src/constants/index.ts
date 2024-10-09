@@ -1,5 +1,5 @@
 
-import { BoardData, Option } from '../types'
+import { BoardData, Option, TagColors } from '../types'
 
 
 /* ---------------------------------------------------
@@ -20,6 +20,11 @@ export const TASK_TITLE = "Task Title"
 export const UPDATE_TASK = "Update Task"
 export const TASK_MANAGER = "Task Manager"
 export const LOADING = "Loading..."
+export const TASK_BOARD = "Task Board"
+export const SEARCH = "Search"
+export const SEARCH_TEXT = "Search..."
+export const USER_AVATAR = "User Avatar"
+export const ADD_CARD = "Add Card"
 
 
 /* ---------------------------------------------------
@@ -30,10 +35,24 @@ export enum Theme {
 	LIGHT = 'light'
 }
 
+export const TAG_COLORS: TagColors = {
+  bug: "#e53935",
+  urgent: "#ff0000",
+  design: "#ffb300",
+  feature: "#4caf50",
+  devops: "#2196F3",
+  automation: "#3f51b5",
+  testing: "#9c27b0",
+  UI: "#ff4081",
+  marketing: "#ffc107",
+  research: "#673ab7",
+  payment: "#795548",
+};
+
 export const TASK_STATUS: Option[] = [
 	{ label: 'Pending', value: 'pending' },
-	{ label: 'in-progress', value: 'In Progress' },
-	{ label: 'done', value: 'Done' }
+	{ label: 'In-progress', value: 'In Progress' },
+	{ label: 'Done', value: 'Done' }
 ]
 
 export const INITIAL_BOARD_DATA: BoardData = {

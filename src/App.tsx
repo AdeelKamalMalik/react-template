@@ -1,30 +1,43 @@
-import { FC, Suspense, lazy } from 'react';
+import { FC, Suspense } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import AppRoutes from './routes';
 
-import { LOADING, TASK_MANAGER } from './constants';
 import { TaskProvider } from './context/TaskContext';
 import { ThemeProvider } from './context/ThemeContext';
+import Header from './components/common/Header';
+import styled from 'styled-components';
+import Loader from './components/common/Loader';
+import { useThemeContext } from './context/ThemeContext';
 
-const ThemeToggleButton = lazy(() => import('./components/common/ThemeToggleButton'));
+const AppContainer = styled.div<{ gradient: string }>`
+  min-height: 100vh;
+  background: ${({ gradient }) => gradient};
+  padding: 16px;
+`;
 
 const App: FC = () => {
   return (
-    <Router>
-      <ThemeProvider>
+    <ThemeProvider>
+      <Router>
         <TaskProvider>
-          <div className="app-container">
-            <Suspense fallback={<div>{LOADING}</div>}>
-              <ThemeToggleButton />
-              <h1>{TASK_MANAGER}</h1>
-
-              <AppRoutes />
-            </Suspense>
-          </div>
+          <InnerApp />
         </TaskProvider>
-      </ThemeProvider>
-    </Router>
+      </Router>
+    </ThemeProvider>
+  );
+};
+
+const InnerApp: FC = () => {
+  const { currentGradients } = useThemeContext();
+
+  return (
+    <AppContainer gradient={currentGradients.background}>
+      <Suspense fallback={<Loader />}>
+        <Header />
+        <AppRoutes />
+      </Suspense>
+    </AppContainer>
   );
 };
 
