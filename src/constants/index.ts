@@ -1,3 +1,4 @@
+
 import { BoardData, Option } from '../types'
 
 
@@ -37,38 +38,88 @@ export const TASK_STATUS: Option[] = [
 
 export const INITIAL_BOARD_DATA: BoardData = {
   items: {
-    'item-1': { id: 'item-1', content: 'Content of item 1.'},
-    'item-2': { id: 'item-2', content: 'Content of item 2.'},
-    'item-3': { id: 'item-3', content: 'Content of item 3.'},
-    'item-4': { id: 'item-4', content: 'Content of item 4.'},
-    'item-5': { id: 'item-5', content: 'Content of item 5.'},
-    'item-6': { id: 'item-6', content: 'Content of item 6.'},
-    'item-7': { id: 'item-7', content: 'Content of item 7.'}
+    'item-1': {
+      id: 'item-1',
+      title: 'Fix Login Bug',
+      description: 'Users are unable to log in using Google OAuth. Investigate and fix the issue.',
+      tags: ['bug', 'urgent'],
+      dueDate: '2024-10-15',
+      priority: 'high'
+    },
+    'item-2': {
+      id: 'item-2',
+      title: 'Design New Landing Page',
+      description: 'Create a new landing page design for the upcoming product launch. Ensure it is mobile-friendly.',
+      tags: ['design', 'feature'],
+      dueDate: '2024-11-01',
+      priority: 'medium'
+    },
+    'item-3': {
+      id: 'item-3',
+      title: 'Set Up CI/CD Pipeline',
+      description: 'Automate deployment and testing processes by setting up a continuous integration and deployment pipeline.',
+      tags: ['devops', 'automation'],
+      dueDate: '2024-10-25',
+      priority: 'high'
+    },
+    'item-4': {
+      id: 'item-4',
+      title: 'Write Unit Tests for Auth Module',
+      description: 'Increase the test coverage of the authentication module by adding unit tests.',
+      tags: ['testing'],
+      dueDate: '2024-10-18',
+      priority: 'medium'
+    },
+    'item-5': {
+      id: 'item-5',
+      title: 'Update User Profile UI',
+      description: 'Revamp the user profile UI to make it more user-friendly and responsive.',
+      tags: ['UI', 'feature'],
+      dueDate: '2024-10-30',
+      priority: 'low'
+    },
+    'item-6': {
+      id: 'item-6',
+      title: 'Create Marketing Email Template',
+      description: 'Design a reusable marketing email template for newsletters and announcements.',
+      tags: ['marketing', 'design'],
+      dueDate: '2024-11-05',
+      priority: 'low'
+    },
+    'item-7': {
+      id: 'item-7',
+      title: 'Research Payment Gateway Options',
+      description: 'Compare payment gateway providers and make recommendations for the best solution.',
+      tags: ['research', 'payment'],
+      dueDate: '2024-10-20',
+      priority: 'medium'
+    }
   },
   columns: {
     'column-1': {
       id: 'column-1',
-      title: 'Column 1',
+      title: 'To Do',
       itemsIds: ['item-1', 'item-2', 'item-3', 'item-4', 'item-5', 'item-6', 'item-7']
     },
     'column-2': {
       id: 'column-2',
-      title: 'Column 2',
+      title: 'In Progress',
       itemsIds: []
     },
     'column-3': {
       id: 'column-3',
-      title: 'Column 3',
+      title: 'Review',
       itemsIds: []
     },
     'column-4': {
       id: 'column-4',
-      title: 'Column 4',
+      title: 'Done',
       itemsIds: []
     }
   },
   columnsOrder: ['column-1', 'column-2', 'column-3', 'column-4']
 }
+
 
 /* ---------------------------------------------------
 |                  Messages and Alerts                |

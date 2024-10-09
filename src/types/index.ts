@@ -37,19 +37,44 @@ export type TaskFormValues = {
   status: string;
 }
 
-export  type Item = {
-  id: string
-  content: string
-}
+export type Priority = 'low' | 'medium' | 'high'
 
-export  type Column = {
+export type Item = {
   id: string
   title: string
-  itemsIds: string[] // Array of item ids
+  description: string
+  tags?: string[]
+  dueDate?: string
+  priority?: Priority
 }
 
-export  type BoardData = {
+export type Column = {
+  id: string
+  title: string
+  itemsIds: string[]
+}
+
+export type BoardData = {
   items: Record<string, Item>
   columns: Record<string, Column>
-  columnsOrder: string[] // Array of column ids
+  columnsOrder: string[]
+}
+
+export type BoardItemProps = {
+  index: number
+  item: Item
+}
+
+export type BoardItemStylesProps = {
+  isdragging: string;
+  priority?: Priority
+}
+
+export type BoardColumnProps = {
+  column: { id: string, title: string, itemsIds: string[] }
+  items: Item[]
+}
+
+export type BoardColumnContentStylesProps = {
+  isdraggingover: string
 }

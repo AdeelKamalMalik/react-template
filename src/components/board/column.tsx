@@ -1,16 +1,9 @@
+
 import React from 'react'
 import { Droppable } from '@hello-pangea/dnd'
 import styled from 'styled-components'
 import BoardItem  from './item'
-
-type BoardColumnProps = {
-  column: { id: string, title: string, itemsIds: string[] }
-  items: { id: string, content: string }[]
-}
-
-type BoardColumnContentStylesProps = {
-  isdraggingover: string
-}
+import { BoardColumnContentStylesProps, BoardColumnProps } from '../../types'
 
 const BoardColumnWrapper = styled.div`
   flex: 1;
@@ -28,7 +21,7 @@ const BoardColumnTitle = styled.h2`
   margin-bottom: 12px;
 `
 
-// Prevent `isdraggingover` from being passed to the DOM element
+// Prevent `isDraggingOver` from being passed to the DOM element
 const BoardColumnContent = styled.div.attrs<BoardColumnContentStylesProps>(
   ({ isdraggingover }) => ({
     style: {
@@ -40,7 +33,7 @@ const BoardColumnContent = styled.div.attrs<BoardColumnContentStylesProps>(
   border-radius: 4px;
 `
 
-const BoardColumn: React.FC<BoardColumnProps> = ({ column = { title: 'Default Column', id: 'default' }, items = [] }) => {
+const BoardColumn: React.FC<BoardColumnProps> = ({ column, items }) => {
   return (
     <BoardColumnWrapper>
       <BoardColumnTitle>{column.title}</BoardColumnTitle>

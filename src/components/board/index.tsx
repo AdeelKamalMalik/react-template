@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react'
 import { DragDropContext, DropResult } from '@hello-pangea/dnd'
 import styled from 'styled-components'
-
 // Import BoardColumn component
-import BoardColumn  from './column'
+import BoardColumn from './column'
 import { INITIAL_BOARD_DATA } from '../../constants'
 import { BoardData } from '../../types'
 
@@ -14,24 +13,19 @@ const BoardEl = styled.div`
   justify-content: space-between;
 `
 
-const Board: React.FC = () => {
+export const Board: React.FC = () => {
   const [boardData, setBoardData] = useState<BoardData>(INITIAL_BOARD_DATA)
-
   const onDragEnd = useCallback((result: DropResult) => {
     const { source, destination, draggableId } = result
-    console.log(result, "::::::::::::::::")
     if (!destination) return
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
-
     const columnStart = boardData.columns[source.droppableId]
     const columnFinish = boardData.columns[destination.droppableId]
-
     // Moving within the same column
     if (columnStart === columnFinish) {
       const newItemsIds = Array.from(columnStart.itemsIds)
       newItemsIds.splice(source.index, 1)
       newItemsIds.splice(destination.index, 0, draggableId)
-
       const newColumnStart = { ...columnStart, itemsIds: newItemsIds }
       const newState = {
         ...boardData,
@@ -46,11 +40,9 @@ const Board: React.FC = () => {
       const newStartItemsIds = Array.from(columnStart.itemsIds)
       newStartItemsIds.splice(source.index, 1)
       const newColumnStart = { ...columnStart, itemsIds: newStartItemsIds }
-
       const newFinishItemsIds = Array.from(columnFinish.itemsIds)
       newFinishItemsIds.splice(destination.index, 0, draggableId)
       const newColumnFinish = { ...columnFinish, itemsIds: newFinishItemsIds }
-
       const newState = {
         ...boardData,
         columns: {
@@ -62,19 +54,16 @@ const Board: React.FC = () => {
       setBoardData(newState)
     }
   }, [boardData])
-
+  
   return (
     <BoardEl>
       <DragDropContext onDragEnd={onDragEnd}>
         {boardData.columnsOrder.map(columnId => {
           const column = boardData.columns[columnId]
           const items = column.itemsIds.map(itemId => boardData.items[itemId])
-
           return <BoardColumn key={column.id} column={column} items={items} />
         })}
       </DragDropContext>
     </BoardEl>
   )
 }
-
-export default Board

@@ -1,7 +1,7 @@
 import React from 'react'
 import { createGlobalStyle } from 'styled-components'
 
-import Board from '../../components/board'
+import {Board} from '../../components/board'
 
 const GlobalStyle = createGlobalStyle`
   body {
