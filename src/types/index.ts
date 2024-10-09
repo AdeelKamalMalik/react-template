@@ -36,3 +36,20 @@ export type TaskFormValues = {
   title: string;
   status: string;
 }
+
+export  type Item = {
+  id: string
+  content: string
+}
+
+export  type Column = {
+  id: string
+  title: string
+  itemsIds: string[] // Array of item ids
+}
+
+export  type BoardData = {
+  items: Record<string, Item>
+  columns: Record<string, Column>
+  columnsOrder: string[] // Array of column ids
+}
