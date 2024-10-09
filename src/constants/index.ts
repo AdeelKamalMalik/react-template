@@ -12,19 +12,26 @@ export const ADD_TASK_ROUTE = '/add-task'
 /* ---------------------------------------------------
 |                  Strings Literals                   |
 -----------------------------------------------------*/
+export const TAGS = "Tags"
 export const TITLE = "Title"
 export const STATUS = "Status"
+export const SEARCH = "Search"
+export const CLOSE_BUTTON = "×"
 export const NEW_TASK = "New Task"
 export const ADD_TASK = "Add Task"
-export const TASK_TITLE = "Task Title"
-export const UPDATE_TASK = "Update Task"
-export const TASK_MANAGER = "Task Manager"
-export const LOADING = "Loading..."
-export const TASK_BOARD = "Task Board"
-export const SEARCH = "Search"
-export const SEARCH_TEXT = "Search..."
-export const USER_AVATAR = "User Avatar"
 export const ADD_CARD = "Add Card"
+export const LOADING = "Loading..."
+export const TASK_TITLE = "Task Title"
+export const SEARCH_TEXT = "Search..."
+export const TASK_BOARD = "Task Board"
+export const USER_AVATAR = "User Avatar"
+export const UPDATE_TASK = "Update Task"
+export const DESCRIPTION = "Description"
+export const TASK_MANAGER = "Task Manager"
+export const MODAL_TITLE_ADD = "Add New Task"
+export const TASK_DESCRIPTION = "Task Description"
+export const TASK_TAGS = "Tags (comma separated)"
+export const MODAL_TITLE_UPDATE = "Update Task"
 
 
 /* ---------------------------------------------------

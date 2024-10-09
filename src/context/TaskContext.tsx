@@ -13,6 +13,7 @@ export const useTaskContext = () => {
 };
 
 export const TaskProvider: FC<{ children: ReactNode }> = ({ children }) => {
+  const [openModal, setOpenModal] = useState<boolean>(false)
   const [tasks, setTasks] = useState<Item[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
 
@@ -36,6 +37,7 @@ export const TaskProvider: FC<{ children: ReactNode }> = ({ children }) => {
       };
   
       setTasks((prevTasks) => [...prevTasks, newTask]);
+      setOpenModal(false)
     },
     []
   );
@@ -55,13 +57,15 @@ export const TaskProvider: FC<{ children: ReactNode }> = ({ children }) => {
           task.id === updatedTask.id ? updatedTask : task
         )
       );
+
+      setOpenModal(false)
     },
     []
   );
 
   const value = useMemo(
-    () => ({ tasks: filteredTasks, addTask, removeTask, searchTerm, updateTask, setSearchTerm }),
-    [filteredTasks, addTask, removeTask, searchTerm, updateTask]
+    () => ({ tasks: filteredTasks, addTask, removeTask, searchTerm, updateTask, setSearchTerm, openModal, setOpenModal }),
+    [filteredTasks, addTask, removeTask, searchTerm, updateTask, openModal]
   );
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;

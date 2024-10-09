@@ -8,7 +8,7 @@ import { ADD_CARD, SEARCH, SEARCH_TEXT, TASK_BOARD, USER_AVATAR } from '../../co
 
 const Header: FC = () => {
   const { isDarkMode } = useThemeContext();
-  const { setSearchTerm } = useTaskContext();
+  const { setSearchTerm, setOpenModal } = useTaskContext();
   const [randomAvatar, setRandomAvatar] = useState<string>('');
 
   useEffect(() => {
@@ -57,6 +57,7 @@ const Header: FC = () => {
               backgroundColor: isDarkMode ? '#555' : '#e0e0e0',
             },
           }}
+          onClick={() => setOpenModal(true)}
         >
           {ADD_CARD}
         </Button>

@@ -1,9 +1,7 @@
 import React from 'react';
 import { Droppable } from '@hello-pangea/dnd';
 import styled from 'styled-components';
-
 import BoardItem from './item';
-
 import { useThemeContext } from '../../context/ThemeContext';
 import { BoardColumnContentStylesProps, BoardColumnProps } from '../../types';
 
@@ -13,7 +11,7 @@ const BoardColumnWrapper = styled.div`
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background: linear-gradient(135deg, #a04cb1, #ff6dff);
-  
+
   & + & {
     margin-left: 12px;
   }
@@ -36,8 +34,8 @@ const BoardColumnContent = styled.div.attrs<BoardColumnContentStylesProps>(
   border-radius: 4px;
 `;
 
-const BoardColumn: React.FC<BoardColumnProps> = ({ column, items }) => {
-  const { currentGradients, isDarkMode } = useThemeContext(); // Assuming isDarkMode is part of your theme context
+const BoardColumn: React.FC<BoardColumnProps> = ({ column, items, onEditTask }) => {
+  const { currentGradients, isDarkMode } = useThemeContext();
 
   return (
     <BoardColumnWrapper style={{ background: currentGradients.background }}>
@@ -51,7 +49,12 @@ const BoardColumn: React.FC<BoardColumnProps> = ({ column, items }) => {
             isdraggingover={snapshot.isDraggingOver ? 'true' : 'false'}
           >
             {items.map((item, index) => (
-              <BoardItem key={item.id} item={item} index={index} />
+              <BoardItem
+                key={item.id}
+                item={item}
+                index={index}
+                onEditTask={onEditTask}
+              />
             ))}
             {provided.placeholder}
           </BoardColumnContent>

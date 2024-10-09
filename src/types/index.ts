@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type TaskStatus = 'pending' | 'in-progress' | 'done';
 
 export type Task = {
@@ -7,12 +9,14 @@ export type Task = {
 }
 
 export type TaskContextProps = {
+  openModal: boolean;
   tasks: Item[];
   addTask: (title: string, description: string, tags: Tag[]) => void;
   updateTask: (task: Item) => void;
   removeTask: (id: string) => void;
   searchTerm: string;
   setSearchTerm: (term: string) => void;
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
 };
 
 export type ThemeContextProps = {
@@ -69,6 +73,7 @@ export type BoardData = {
 export type BoardItemProps = {
   index: number
   item: Item
+  onEditTask: (itemId: string) => void;
 }
 
 export type BoardItemStylesProps = {
@@ -79,6 +84,7 @@ export type BoardItemStylesProps = {
 export type BoardColumnProps = {
   column: { id: string, title: string, itemsIds: string[] }
   items: Item[]
+  onEditTask: (itemId: string) => void;
 }
 
 export type BoardColumnContentStylesProps = {
@@ -101,3 +107,9 @@ export type Tag =
 export type TagColors = {
   [key in Tag]: string;
 };
+
+export type FormFieldControllerProps = {
+  name: string;
+  placeholder: string;
+  type: 'text' | 'textarea';
+}
