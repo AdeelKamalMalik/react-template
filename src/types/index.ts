@@ -113,7 +113,32 @@ export type TagColors = {
 export type FormFieldControllerProps = {
   name: string;
   placeholder: string;
-  type: 'text' | 'textarea' | 'autocomplete';
+  isPassword?: boolean;
+  type?: 'text' | 'textarea' | 'autocomplete';
   freeSolo?: boolean;
   options?: string[]
 }
+
+export type User = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+};
+
+export type AuthContextProps = {
+  isAuthenticated: boolean;
+  login: (email: string, password: string) => Promise<boolean>;
+  signup: (email: string, password: string, firstName: string, lastName: string) => Promise<boolean>;
+  logout: () => void;
+}
+
+export type UserLogin = {
+  email: string;
+  password: string
+}
+
+export type CardFormProps = {
+  onClose: () => void;
+  task?: { id: string; title: string; description: string; tags: string[] };
+};

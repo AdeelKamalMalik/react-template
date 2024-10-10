@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/system';
 import { Controller, useFormContext } from 'react-hook-form';
 import {
@@ -6,8 +6,10 @@ import {
   FormControl,
   FormHelperText,
   Autocomplete,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
-
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { FormFieldControllerProps } from '../types';
 
 const StyledFormControl = styled(FormControl)({
@@ -18,7 +20,8 @@ const StyledFormControl = styled(FormControl)({
 const FormFieldController: React.FC<FormFieldControllerProps> = ({
   name,
   placeholder,
-  type,
+  isPassword,
+  type = 'text',
   options = [],
   freeSolo = false,
 }) => {
@@ -28,6 +31,17 @@ const FormFieldController: React.FC<FormFieldControllerProps> = ({
   } = useFormContext();
 
   const isError = !!errors[name];
+  
+  // Local state to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
 
   return (
     <StyledFormControl variant="outlined" error={isError}>
@@ -43,7 +57,7 @@ const FormFieldController: React.FC<FormFieldControllerProps> = ({
                 freeSolo={freeSolo}
                 options={options}
                 value={field.value || []}
-                onChange={(event, newValue) => {
+                onChange={(_, newValue) => {
                   field.onChange(newValue);
                 }}
                 renderInput={(params) => (
@@ -52,9 +66,6 @@ const FormFieldController: React.FC<FormFieldControllerProps> = ({
                     placeholder={placeholder}
                     variant="outlined"
                     error={isError}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
                   />
                 )}
               />
@@ -64,6 +75,7 @@ const FormFieldController: React.FC<FormFieldControllerProps> = ({
           return (
             <TextField
               {...field}
+              type={isPassword && !showPassword ? 'password' : type}
               placeholder={placeholder}
               variant="outlined"
               fullWidth
@@ -71,9 +83,24 @@ const FormFieldController: React.FC<FormFieldControllerProps> = ({
               minRows={type === 'textarea' ? 3 : 1}
               maxRows={type === 'textarea' ? 5 : undefined}
               error={isError}
-              InputLabelProps={{
-                shrink: true,
-              }}
+              InputProps={
+                isPassword
+                  ? {
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }
+                  : undefined
+              }
             />
           );
         }}

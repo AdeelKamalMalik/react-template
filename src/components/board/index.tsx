@@ -1,21 +1,13 @@
 import React, { useState, useCallback } from 'react';
-import styled from 'styled-components';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 
 import CardForm from './form';
-
 import BoardColumn from './column';
+
+import { BoardEl } from './styles';
 import { Item } from '../../types';
 import { useTaskContext } from '../../context/TaskContext';
 import { useThemeContext } from '../../context/ThemeContext';
-
-const BoardEl = styled.div<{ gradient: string }>`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  height: 100vh;
-  background: ${({ gradient }) => gradient};
-`;
 
 export const Board: React.FC = () => {
   const { currentGradients } = useThemeContext();

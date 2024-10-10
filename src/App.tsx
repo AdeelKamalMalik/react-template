@@ -9,6 +9,7 @@ import Header from './components/common/Header';
 import styled from 'styled-components';
 import Loader from './components/common/Loader';
 import { useThemeContext } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
 
 const AppContainer = styled.div<{ gradient: string }>`
   min-height: 100vh;
@@ -25,11 +26,13 @@ const AppContainer = styled.div<{ gradient: string }>`
 const App: FC = () => {
   return (
     <ThemeProvider>
-      <Router>
-        <TaskProvider>
-          <InnerApp />
-        </TaskProvider>
-      </Router>
+      <AuthProvider>
+        <Router>
+          <TaskProvider>
+            <InnerApp />
+          </TaskProvider>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
 };

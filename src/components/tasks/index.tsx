@@ -16,7 +16,7 @@ import { TaskStatus } from '../../types';
 import { useTaskContext } from '../../context/TaskContext';
 import { ADD_TASK, ADD_TASK_ROUTE, NO_TASK_IS_AVAILABLE } from '../../constants';
 
-const statusColors: Record<TaskStatus, string> = {
+export const statusColors: Record<TaskStatus, string> = {
   "pending": 'orange',
   "in-progress": 'blue',
   "done": 'green',
@@ -55,7 +55,7 @@ const TaskListingComponent: FC = () => {
               <IconButton
                 edge="end"
                 aria-label="edit"
-                onClick={() => handleEditTask(task.id)}
+                onClick={() => handleEditTask(parseInt(task.id))}
                 sx={{ marginLeft: 2 }}
               >
                 <Edit />

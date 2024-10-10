@@ -6,21 +6,29 @@ import { BoardData, Option, TagColors } from '../types'
 |                       Routes                        |
 -----------------------------------------------------*/
 export const ROOT_ROUTE = '/'
+export const LOGIN_ROUTE = '/login'
+export const SIGN_UP_ROUTE = '/sign-up'
 export const ADD_TASK_ROUTE = '/add-task'
 
 
 /* ---------------------------------------------------
 |                  Strings Literals                   |
 -----------------------------------------------------*/
-export const TAGS = "Tags"
+export const EMAIL = "Email"
+export const LOGIN = "Login"
 export const TITLE = "Title"
 export const STATUS = "Status"
+export const LOGOUT = "Logout"
 export const SEARCH = "Search"
 export const TASK_TAGS = "Tags"
+export const SIGN_UP = "Sign Up"
 export const NEW_TASK = "New Task"
 export const ADD_TASK = "Add Task"
+export const PASSWORD = "Password"
 export const ADD_CARD = "Add Card"
 export const LOADING = "Loading..."
+export const LAST_NAME = "Last Name"
+export const FIRST_NAME = "First Name"
 export const TASK_TITLE = "Task Title"
 export const SEARCH_TEXT = "Search..."
 export const TASK_BOARD = "Task Board"
@@ -28,10 +36,18 @@ export const USER_AVATAR = "User Avatar"
 export const UPDATE_TASK = "Update Task"
 export const DESCRIPTION = "Description"
 export const TASK_MANAGER = "Task Manager"
+export const JOIN_BOARD = "Join Task Board"
+export const INVALID_EMAIL  = "Invalid Email"
 export const MODAL_TITLE_ADD = "Add New Task"
-export const TASK_DESCRIPTION = "Task Description"
 export const MODAL_TITLE_UPDATE = "Update Task"
-
+export const USER_NOT_FOUND = "User not found!";
+export const TASK_DESCRIPTION = "Task Description"
+export const INVALID_PASSWORD = "Invalid password!";
+export const WELCOME_TO_BOARD = "Welcome to Task Board";
+export const DO_NOT_HAVE_ACCOUNT = "Don’t have an account?  "
+export const ALREADY_HAVE_ACCOUNT = "Already have an account?  "
+export const PLEASE_LOGIN_TO_CONTINUE = "Please login to continue managing your tasks"
+export const CREATE_YOUR_ACCOUNT = "Create your account to start managing tasks efficiently"
 
 /* ---------------------------------------------------
 |                  Lists and Enums                    |
@@ -163,7 +179,11 @@ export const INITIAL_BOARD_DATA: BoardData = {
 /* ---------------------------------------------------
 |                  Messages and Alerts                |
 -----------------------------------------------------*/
-export const TASK_CONTEXT_ERROR = "useTaskContext must be used within a TaskProvider"
-export const THEME_CONTEXT_ERROR = "useThemeContext must be used within a ThemeProvider"
-export const YOU_MUST_BE_AUTHENTICATED = "You must be logged in to view this page."
+export const USER_ALREADY_EXIST = 'User already exists!'
+export const USER_REGISTER_SUCCESSFULLY = 'User registered successfully!'
 export const NO_TASK_IS_AVAILABLE = "No tasks available. Please add a new task."
+export const PASSWORD_VALIDATION_MESSAGE = 'Password must be at least 6 characters'
+export const YOU_MUST_BE_AUTHENTICATED = "You must be logged in to view this page."
+export const TASK_CONTEXT_ERROR = "useTaskContext must be used within a TaskProvider"
+export const AUTH_CONTEXT_PROVIDER_ERROR = 'useAuth must be used within an AuthProvider'
+export const THEME_CONTEXT_ERROR = "useThemeContext must be used within a ThemeProvider"
