@@ -16,7 +16,7 @@ export const TAGS = "Tags"
 export const TITLE = "Title"
 export const STATUS = "Status"
 export const SEARCH = "Search"
-export const CLOSE_BUTTON = "×"
+export const TASK_TAGS = "Tags"
 export const NEW_TASK = "New Task"
 export const ADD_TASK = "Add Task"
 export const ADD_CARD = "Add Card"
@@ -30,7 +30,6 @@ export const DESCRIPTION = "Description"
 export const TASK_MANAGER = "Task Manager"
 export const MODAL_TITLE_ADD = "Add New Task"
 export const TASK_DESCRIPTION = "Task Description"
-export const TASK_TAGS = "Tags (comma separated)"
 export const MODAL_TITLE_UPDATE = "Update Task"
 
 
@@ -38,8 +37,8 @@ export const MODAL_TITLE_UPDATE = "Update Task"
 |                  Lists and Enums                    |
 -----------------------------------------------------*/
 export enum Theme {
-	DARK = 'dark',
-	LIGHT = 'light'
+  DARK = 'dark',
+  LIGHT = 'light'
 }
 
 export const TAG_COLORS: TagColors = {
@@ -57,9 +56,23 @@ export const TAG_COLORS: TagColors = {
 };
 
 export const TASK_STATUS: Option[] = [
-	{ label: 'Pending', value: 'pending' },
-	{ label: 'In-progress', value: 'In Progress' },
-	{ label: 'Done', value: 'Done' }
+  { label: 'Pending', value: 'pending' },
+  { label: 'In-progress', value: 'In Progress' },
+  { label: 'Done', value: 'Done' }
+]
+
+export const TAG_OPTIONS = [
+  'bug',
+  'urgent',
+  'design',
+  'feature',
+  'devops',
+  'automation',
+  'testing',
+  'UI',
+  'marketing',
+  'research',
+  'payment'
 ]
 
 export const INITIAL_BOARD_DATA: BoardData = {
@@ -125,22 +138,22 @@ export const INITIAL_BOARD_DATA: BoardData = {
     'column-1': {
       id: 'column-1',
       title: 'To Do',
-      itemsIds: ['item-1', 'item-2', 'item-3', 'item-4', 'item-5', 'item-6', 'item-7']
+      itemsIds: ['item-1', 'item-2']
     },
     'column-2': {
       id: 'column-2',
       title: 'In Progress',
-      itemsIds: []
+      itemsIds: ['item-3', 'item-4']
     },
     'column-3': {
       id: 'column-3',
       title: 'Review',
-      itemsIds: []
+      itemsIds: ['item-5']
     },
     'column-4': {
       id: 'column-4',
       title: 'Done',
-      itemsIds: []
+      itemsIds: ['item-6', 'item-7']
     }
   },
   columnsOrder: ['column-1', 'column-2', 'column-3', 'column-4']

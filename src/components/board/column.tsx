@@ -1,7 +1,11 @@
 import React from 'react';
-import { Droppable } from '@hello-pangea/dnd';
 import styled from 'styled-components';
+import { Droppable } from '@hello-pangea/dnd';
+import AddIcon from '@mui/icons-material/Add';
+
 import BoardItem from './item';
+
+import { useTaskContext } from '../../context/TaskContext';
 import { useThemeContext } from '../../context/ThemeContext';
 import { BoardColumnContentStylesProps, BoardColumnProps } from '../../types';
 
@@ -20,7 +24,7 @@ const BoardColumnWrapper = styled.div`
 const BoardColumnTitle = styled.h2<{ isDarkMode: boolean }>`
   font: 14px sans-serif;
   margin-bottom: 12px;
-  color: ${({ isDarkMode }) => (isDarkMode ? '#fff' : '#000')}; /* Set text color based on theme */
+  color: ${({ isDarkMode }) => (isDarkMode ? '#fff' : '#000')};
 `;
 
 const BoardColumnContent = styled.div.attrs<BoardColumnContentStylesProps>(
@@ -34,8 +38,23 @@ const BoardColumnContent = styled.div.attrs<BoardColumnContentStylesProps>(
   border-radius: 4px;
 `;
 
+const EmptyCard = styled.div`
+  padding: 16px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+`;
+
 const BoardColumn: React.FC<BoardColumnProps> = ({ column, items, onEditTask }) => {
   const { currentGradients, isDarkMode } = useThemeContext();
+  const { setOpenModal } = useTaskContext()
 
   return (
     <BoardColumnWrapper style={{ background: currentGradients.background }}>
@@ -48,14 +67,21 @@ const BoardColumn: React.FC<BoardColumnProps> = ({ column, items, onEditTask }) 
             {...provided.droppableProps}
             isdraggingover={snapshot.isDraggingOver ? 'true' : 'false'}
           >
-            {items.map((item, index) => (
-              <BoardItem
-                key={item.id}
-                item={item}
-                index={index}
-                onEditTask={onEditTask}
-              />
-            ))}
+            {items.length > 0 ? (
+              items.map((item, index) => (
+                <BoardItem
+                  key={item.id}
+                  item={item}
+                  index={index}
+                  onEditTask={onEditTask}
+                />
+              ))
+            ) : (
+              <EmptyCard onClick={() => setOpenModal(true)}>
+                <AddIcon />
+                Add a card
+              </EmptyCard>
+            )}
             {provided.placeholder}
           </BoardColumnContent>
         )}

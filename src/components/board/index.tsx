@@ -1,13 +1,13 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 
+import CardForm from './form';
+
 import BoardColumn from './column';
-import { BoardData, Item } from '../../types';
-import { INITIAL_BOARD_DATA } from '../../constants';
+import { Item } from '../../types';
 import { useTaskContext } from '../../context/TaskContext';
 import { useThemeContext } from '../../context/ThemeContext';
-import CardForm from './form';
 
 const BoardEl = styled.div<{ gradient: string }>`
   display: flex;
@@ -19,17 +19,11 @@ const BoardEl = styled.div<{ gradient: string }>`
 
 export const Board: React.FC = () => {
   const { currentGradients } = useThemeContext();
-  const { tasks, searchTerm, openModal, setOpenModal } = useTaskContext();
+  const { searchTerm, openModal, setOpenModal, boardData, setBoardData } = useTaskContext();
   const [editingTask, setEditingTask] = useState<Item | null>(null);
-  const [boardData, setBoardData] = useState<BoardData>(INITIAL_BOARD_DATA);
-
-  const toggleModal = () => {
-    setOpenModal((prev) => !prev);
-    setEditingTask(null);
-  };
 
   const openEditModal = (taskId: string) => {
-    const task = tasks.find((task) => task.id === taskId);
+    const task = Object.values(boardData.items).find((task) => task.id === taskId);
 
     if (task) {
       setEditingTask(task);
@@ -37,28 +31,6 @@ export const Board: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const updatedItems = tasks.reduce((acc, task) => {
-      acc[task.id] = task;
-      return acc;
-    }, {} as BoardData['items']);
-
-    setBoardData((prevData) => ({
-      ...prevData,
-      items: {
-        ...prevData.items,
-        ...updatedItems,
-      },
-      columns: {
-        ...prevData.columns,
-        'column-1': {
-          ...prevData.columns['column-1'],
-          itemsIds: tasks.map((task) => task.id).concat('item-1', 'item-2', 'item-3', 'item-4', 'item-5', 'item-6', 'item-7',), // Update column-1 with the task ids
-        },
-      },
-    }));
-  }, [tasks]);
-  
   const onDragEnd = useCallback(
     (result: DropResult) => {
       const { source, destination, draggableId } = result;
@@ -107,7 +79,7 @@ export const Board: React.FC = () => {
         setBoardData(newState);
       }
     },
-    [boardData]
+    [boardData, setBoardData]
   );
 
   return (
@@ -138,7 +110,10 @@ export const Board: React.FC = () => {
 
       {openModal && (
         <CardForm
-          onClose={toggleModal}
+          onClose={() => {
+            setOpenModal(false)
+            setEditingTask(null)
+          }}
           task={
             editingTask as {
               id: string;

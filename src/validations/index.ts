@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { TITLE, STATUS, DESCRIPTION } from '../constants';
+import { TITLE, STATUS, DESCRIPTION, TAGS } from '../constants';
 
 const requiredMessage = (field: string) => `${field} is required`;
 
@@ -11,5 +11,5 @@ export const TaskSchema = yup.object().shape({
 export const CardSchema = yup.object().shape({
   title: yup.string().required(requiredMessage(TITLE)),
   description: yup.string().required(requiredMessage(DESCRIPTION)),
-  tags: yup.string(),
+  tags: yup.array().of(yup.string().trim()).required(requiredMessage(TAGS))
 });

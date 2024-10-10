@@ -10,6 +10,7 @@ export type Task = {
 
 export type TaskContextProps = {
   openModal: boolean;
+  boardData: BoardData;
   tasks: Item[];
   addTask: (title: string, description: string, tags: Tag[]) => void;
   updateTask: (task: Item) => void;
@@ -17,6 +18,7 @@ export type TaskContextProps = {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
+  setBoardData: Dispatch<SetStateAction<BoardData>>;
 };
 
 export type ThemeContextProps = {
@@ -111,5 +113,7 @@ export type TagColors = {
 export type FormFieldControllerProps = {
   name: string;
   placeholder: string;
-  type: 'text' | 'textarea';
+  type: 'text' | 'textarea' | 'autocomplete';
+  freeSolo?: boolean;
+  options?: string[]
 }

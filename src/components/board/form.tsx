@@ -1,6 +1,16 @@
-import React, { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
+
+import InputController from '../../controllers/Input';
+
+import { Tag } from '../../types';
+import { CardSchema } from '../../validations';
 import { useTaskContext } from '../../context/TaskContext';
+import { useThemeContext } from '../../context/ThemeContext';
 import {
   TASK_TITLE,
   TASK_DESCRIPTION,
@@ -9,13 +19,8 @@ import {
   UPDATE_TASK,
   MODAL_TITLE_ADD,
   MODAL_TITLE_UPDATE,
-  CLOSE_BUTTON,
+  TAG_OPTIONS,
 } from '../../constants';
-import { Tag } from '../../types';
-import { useForm, FormProvider, SubmitHandler} from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { CardSchema } from '../../validations';
-import InputController from '../../controllers/Input';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -30,20 +35,35 @@ const ModalOverlay = styled.div`
   z-index: 1000;
 `;
 
-const ModalContent = styled.div`
-  background: white;
+const ModalContent = styled.div<{ isDarkMode: boolean }>`
+  background: ${(props) => (props.isDarkMode ? '#2c2c2c' : 'white')};
+  color: ${(props) => (props.isDarkMode ? 'white' : 'black')};
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 400px;
 `;
 
-const CloseButton = styled.button`
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  float: right;
+const ModalHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+
+const CloseButton = styled(IconButton)`
+  background-color: red;
+  color: white;
+  &:hover {
+    background-color: darkred;
+  }
+  width: 36px;
+  height: 36px;
+`;
+
+const ModalTitle = styled.h2`
+  margin: 0;
+  font-size: 1.5rem;
 `;
 
 const TaskForm = styled.form`
@@ -51,9 +71,9 @@ const TaskForm = styled.form`
   flex-direction: column;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ isDarkMode: boolean }>`
   padding: 10px;
-  background: #007bff;
+  background: ${(props) => (props.isDarkMode ? '#007bff' : '#007bff')};
   color: white;
   border: none;
   border-radius: 4px;
@@ -66,14 +86,16 @@ export type CardFormProps = {
 };
 
 const CardForm: FC<CardFormProps> = ({ onClose, task }) => {
+  const { isDarkMode } = useThemeContext()
   const { addTask, updateTask } = useTaskContext();
+  const [availableTags] = useState<string[]>(TAG_OPTIONS);
 
   const methods = useForm({
     resolver: yupResolver(CardSchema),
     defaultValues: {
       title: '',
       description: '',
-      tags: '',
+      tags: task ? task.tags : ['bug'],
     },
   });
 
@@ -84,32 +106,38 @@ const CardForm: FC<CardFormProps> = ({ onClose, task }) => {
       reset({
         title: task.title,
         description: task.description,
-        tags: task.tags.join(','),
+        tags: task.tags,
       });
     } else {
       reset({
         title: '',
         description: '',
-        tags: '',
+        tags: [],
       });
     }
   }, [task, reset]);
 
-  const onSubmit: SubmitHandler<{ title: string; description: string; tags?: string }> = (data) => {
-    const tagArray = data?.tags?.split(',').map(tag => tag.trim());
+  const onSubmit: SubmitHandler<{ title: string; description: string; tags: (string | undefined)[] }> = (data) => {
+    const tagArray = data.tags.filter((tag): tag is string => tag !== undefined);
+
     if (task) {
       updateTask({ ...task, title: data.title, description: data.description, tags: tagArray as Tag[] });
     } else {
       addTask(data.title, data.description, tagArray as Tag[]);
     }
+
     onClose();
   };
 
   return (
     <ModalOverlay>
-      <ModalContent>
-        <CloseButton onClick={onClose}>{CLOSE_BUTTON}</CloseButton>
-        <h2>{task ? MODAL_TITLE_UPDATE : MODAL_TITLE_ADD}</h2>
+      <ModalContent isDarkMode={isDarkMode}> 
+        <ModalHeader>
+          <ModalTitle>{task ? MODAL_TITLE_UPDATE : MODAL_TITLE_ADD}</ModalTitle>
+          <CloseButton onClick={onClose}>
+            <CloseIcon />
+          </CloseButton>
+        </ModalHeader>
         <FormProvider {...methods}>
           <TaskForm onSubmit={handleSubmit(onSubmit)}>
             <InputController
@@ -127,9 +155,12 @@ const CardForm: FC<CardFormProps> = ({ onClose, task }) => {
             <InputController
               name="tags"
               placeholder={TASK_TAGS}
-              type="text"
+              type="autocomplete"
+              options={availableTags}
+              freeSolo={true}
             />
-            <Button type="submit">{task ? UPDATE_TASK : ADD_TASK}</Button>
+
+            <Button type="submit" isDarkMode={isDarkMode}>{task ? UPDATE_TASK : ADD_TASK}</Button>
           </TaskForm>
         </FormProvider>
       </ModalContent>
