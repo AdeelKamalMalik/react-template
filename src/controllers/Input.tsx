@@ -77,6 +77,7 @@ const FormFieldController: React.FC<FormFieldControllerProps> = ({
               {...field}
               type={isPassword && !showPassword ? 'password' : type}
               placeholder={placeholder}
+              value={field.value || ''}
               variant="outlined"
               fullWidth
               multiline={type === 'textarea'}
