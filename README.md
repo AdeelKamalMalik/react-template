@@ -111,3 +111,32 @@ npm run dev
 ```
 
 Open your browser and navigate to `http://localhost:3000` (or the port specified in your Vite configuration) to view the application.
+
+## Running the Test Cases
+
+To ensure code quality and functionality, unit tests have been added using [Jest](https://jestjs.io/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/).
+
+### Steps to Run Tests:
+
+1. To run the test cases, execute the following command in the project directory:
+
+    ```bash
+    npm run test
+    ```
+
+2. This command runs all the test cases and displays the results in the terminal.
+
+
+### Testing Framework
+
+The application uses Jest for running unit tests, and React Testing Library for testing React components. Ensure that tests are created for all critical components to maintain robust code quality.
+
+```bash
+npm install --save-dev jest @testing-library/react @testing-library/jest-dom
+```
+
+5. Make sure you have all test dependencies installed before running tests.
+
+---
+
+By following the steps outlined in this `README`, you can easily install, run, and test the project. Happy coding!
