@@ -25,7 +25,6 @@ jest.mock('../../../context/TaskContext', () => ({
   }),
 }));
 
-// Mock ThemeContext with different theme scenarios
 jest.mock('../../../context/ThemeContext', () => ({
   useThemeContext: jest.fn(() => ({
     isDarkMode: false,
@@ -44,7 +43,6 @@ describe('Header Component with Light Mode', () => {
   it('renders the Header component without user information in light mode', () => {
     render(<Header />);
 
-    // Check for elements specific to light mode (if applicable)
     expect(screen.queryByText(/john doe/i)).not.toBeInTheDocument();
     expect(screen.queryByRole('button', { name: /add card/i })).not.toBeInTheDocument();
   });
@@ -62,7 +60,6 @@ describe('Header Component with Light Mode', () => {
   });
 });
 
-// Updating mock to simulate dark mode
 jest.mock('../../../context/ThemeContext', () => ({
   useThemeContext: jest.fn(() => ({
     isDarkMode: true,

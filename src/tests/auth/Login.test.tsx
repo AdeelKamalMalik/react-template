@@ -14,7 +14,7 @@ jest.mock('../../context/AuthContext', () => ({
 
 describe('Login Component', () => {
   beforeEach(() => {
-    jest.clearAllMocks(); // Clear any previous mock calls
+    jest.clearAllMocks();
   });
 
   it('renders the login form and all its components', () => {
@@ -65,7 +65,7 @@ describe('Login Component', () => {
   });
 
   it('submits form successfully with valid inputs', async () => {
-    mockedLogin.mockResolvedValue(true); // Simulate successful signup
+    mockedLogin.mockResolvedValue(true);
 
     render(<MemoryRouter>
       <Login />
